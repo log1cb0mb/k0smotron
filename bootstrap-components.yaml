@@ -1,0 +1,1115 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/component: manager
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: k0smotron
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: namespace
+    app.kubernetes.io/part-of: k0smotron
+    control-plane: controller-manager
+  name: k0smotron
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  labels:
+    cluster.x-k8s.io/provider: bootstrap-k0smotron
+    cluster.x-k8s.io/v1beta1: v1beta1
+  name: k0scontrollerconfigs.bootstrap.cluster.x-k8s.io
+spec:
+  group: bootstrap.cluster.x-k8s.io
+  names:
+    kind: K0sControllerConfig
+    listKind: K0sControllerConfigList
+    plural: k0scontrollerconfigs
+    singular: k0scontrollerconfig
+  scope: Namespaced
+  versions:
+  - name: v1beta1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              args:
+                description: |-
+                  Args specifies extra arguments to be passed to k0s worker.
+                  See: https://docs.k0sproject.io/stable/advanced/worker-configuration/
+                items:
+                  type: string
+                type: array
+              downloadURL:
+                description: |-
+                  DownloadURL specifies the URL from which to download the k0s binary.
+                  If the version field is specified, it is ignored, and whatever version is downloaded from the URL is used.
+                type: string
+              files:
+                description: Files specifies extra files to be passed to user_data
+                  upon creation.
+                items:
+                  properties:
+                    content:
+                      type: string
+                    path:
+                      type: string
+                    permissions:
+                      type: string
+                  type: object
+                type: array
+              k0s:
+                description: |-
+                  K0s defines the k0s configuration. Note, that some fields will be overwritten by k0smotron.
+                  If empty, will be used default configuration. @see https://docs.k0sproject.io/stable/configuration/
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
+              postStartCommands:
+                description: PostStartCommands specifies commands to be run after
+                  starting k0s worker.
+                items:
+                  type: string
+                type: array
+              preInstalledK0s:
+                description: PreInstallK0s specifies whether k0s binary is pre-installed
+                  on the node.
+                type: boolean
+              preStartCommands:
+                description: PreStartCommands specifies commands to be run before
+                  starting k0s worker.
+                items:
+                  type: string
+                type: array
+              tunneling:
+                description: Tunneling defines the tunneling configuration for the
+                  cluster.
+                properties:
+                  enabled:
+                    default: false
+                    description: Enabled specifies whether tunneling is enabled.
+                    type: boolean
+                  mode:
+                    default: tunnel
+                    description: |-
+                      Mode describes tunneling mode.
+                      If empty, k0smotron will use the default one.
+                    enum:
+                    - tunnel
+                    - proxy
+                    type: string
+                  serverAddress:
+                    description: |-
+                      Server address of the tunneling server.
+                      If empty, k0smotron will try to detect worker node address for.
+                    type: string
+                  serverNodePort:
+                    default: 31700
+                    description: |-
+                      NodePort to publish for server port of the tunneling server.
+                      If empty, k0smotron will use the default one.
+                    format: int32
+                    type: integer
+                  tunnelingNodePort:
+                    default: 31443
+                    description: |-
+                      NodePort to publish for tunneling port.
+                      If empty, k0smotron will use the default one.
+                    format: int32
+                    type: integer
+                type: object
+              version:
+                description: |-
+                  Version is the version of k0s to use. In case this is not set, k0smotron will use
+                  a version field of the Machine object. If it's empty, the latest version is used.
+                  Make sure the version is compatible with the k0s version running on the control plane.
+                  For reference see the Kubernetes version skew policy: https://kubernetes.io/docs/setup/release/version-skew-policy/
+                type: string
+            type: object
+          status:
+            properties:
+              dataSecretName:
+                description: DataSecretName is the name of the secret that stores
+                  the bootstrap data script.
+                type: string
+              ready:
+                description: Ready indicates the Bootstrapdata field is ready to be
+                  consumed
+                type: boolean
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  labels:
+    cluster.x-k8s.io/provider: bootstrap-k0smotron
+    cluster.x-k8s.io/v1beta1: v1beta1
+  name: k0sworkerconfigs.bootstrap.cluster.x-k8s.io
+spec:
+  group: bootstrap.cluster.x-k8s.io
+  names:
+    kind: K0sWorkerConfig
+    listKind: K0sWorkerConfigList
+    plural: k0sworkerconfigs
+    singular: k0sworkerconfig
+  scope: Namespaced
+  versions:
+  - name: v1beta1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              args:
+                description: |-
+                  Args specifies extra arguments to be passed to k0s worker.
+                  See: https://docs.k0sproject.io/stable/advanced/worker-configuration/
+                items:
+                  type: string
+                type: array
+              downloadURL:
+                description: |-
+                  DownloadURL specifies the URL to download k0s binary from.
+                  If specified the version field is ignored and what ever version is downloaded from the URL is used.
+                type: string
+              files:
+                description: Files specifies extra files to be passed to user_data
+                  upon creation.
+                items:
+                  properties:
+                    content:
+                      type: string
+                    path:
+                      type: string
+                    permissions:
+                      type: string
+                  type: object
+                type: array
+              joinTokenSecretRef:
+                description: |-
+                  JoinTokenSecretRef is a reference to a secret that contains the join token.
+                  This should be only set in the case you want to use a pre-generated join token.
+                properties:
+                  key:
+                    description: Key is the key in the secret that contains the join
+                      token
+                    type: string
+                  name:
+                    description: Name is the name of the secret
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              postStartCommands:
+                description: PostStartCommands specifies commands to be run after
+                  starting k0s worker.
+                items:
+                  type: string
+                type: array
+              preInstalledK0s:
+                description: PreInstallK0s specifies whether k0s binary is pre-installed
+                  on the node.
+                type: boolean
+              preStartCommands:
+                description: PreStartCommands specifies commands to be run before
+                  starting k0s worker.
+                items:
+                  type: string
+                type: array
+              version:
+                description: |-
+                  Version is the version of k0s to use. In case this is not set, k0smotron will use
+                  a version field of the Machine object. If it's empty, the latest version is used.
+                  Make sure the version is compatible with the k0s version running on the control plane.
+                  For reference see the Kubernetes version skew policy: https://kubernetes.io/docs/setup/release/version-skew-policy/
+                type: string
+            type: object
+          status:
+            properties:
+              dataSecretName:
+                description: DataSecretName is the name of the secret that stores
+                  the bootstrap data script.
+                type: string
+              ready:
+                description: Ready indicates the Bootstrapdata field is ready to be
+                  consumed
+                type: boolean
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  labels:
+    cluster.x-k8s.io/provider: bootstrap-k0smotron
+    cluster.x-k8s.io/v1beta1: v1beta1
+  name: k0sworkerconfigtemplates.bootstrap.cluster.x-k8s.io
+spec:
+  group: bootstrap.cluster.x-k8s.io
+  names:
+    kind: K0sWorkerConfigTemplate
+    listKind: K0sWorkerConfigTemplateList
+    plural: k0sworkerconfigtemplates
+    singular: k0sworkerconfigtemplate
+  scope: Namespaced
+  versions:
+  - name: v1beta1
+    schema:
+      openAPIV3Schema:
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              template:
+                properties:
+                  metadata:
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      finalizers:
+                        items:
+                          type: string
+                        type: array
+                      labels:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      name:
+                        type: string
+                      namespace:
+                        type: string
+                    type: object
+                  spec:
+                    properties:
+                      args:
+                        description: |-
+                          Args specifies extra arguments to be passed to k0s worker.
+                          See: https://docs.k0sproject.io/stable/advanced/worker-configuration/
+                        items:
+                          type: string
+                        type: array
+                      downloadURL:
+                        description: |-
+                          DownloadURL specifies the URL to download k0s binary from.
+                          If specified the version field is ignored and what ever version is downloaded from the URL is used.
+                        type: string
+                      files:
+                        description: Files specifies extra files to be passed to user_data
+                          upon creation.
+                        items:
+                          properties:
+                            content:
+                              type: string
+                            path:
+                              type: string
+                            permissions:
+                              type: string
+                          type: object
+                        type: array
+                      joinTokenSecretRef:
+                        description: |-
+                          JoinTokenSecretRef is a reference to a secret that contains the join token.
+                          This should be only set in the case you want to use a pre-generated join token.
+                        properties:
+                          key:
+                            description: Key is the key in the secret that contains
+                              the join token
+                            type: string
+                          name:
+                            description: Name is the name of the secret
+                            type: string
+                        required:
+                        - key
+                        - name
+                        type: object
+                      postStartCommands:
+                        description: PostStartCommands specifies commands to be run
+                          after starting k0s worker.
+                        items:
+                          type: string
+                        type: array
+                      preInstalledK0s:
+                        description: PreInstallK0s specifies whether k0s binary is
+                          pre-installed on the node.
+                        type: boolean
+                      preStartCommands:
+                        description: PreStartCommands specifies commands to be run
+                          before starting k0s worker.
+                        items:
+                          type: string
+                        type: array
+                      version:
+                        description: |-
+                          Version is the version of k0s to use. In case this is not set, k0smotron will use
+                          a version field of the Machine object. If it's empty, the latest version is used.
+                          Make sure the version is compatible with the k0s version running on the control plane.
+                          For reference see the Kubernetes version skew policy: https://kubernetes.io/docs/setup/release/version-skew-policy/
+                        type: string
+                    type: object
+                type: object
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: controller-manager-sa
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: serviceaccount
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-controller-manager-bootstrap
+  namespace: k0smotron
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: leader-election-role
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: role
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-leader-election-role-bootstrap
+  namespace: k0smotron
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: k0smotron-manager-role-bootstrap
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - events
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  resources:
+  - k0scontrollerconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  resources:
+  - k0scontrollerconfigs/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  resources:
+  - k0sworkerconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bootstrap.cluster.x-k8s.io
+  resources:
+  - k0sworkerconfigs/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cluster.x-k8s.io
+  resources:
+  - clusters
+  - clusters/status
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cluster.x-k8s.io
+  resources:
+  - clusters
+  - clusters/status
+  - machines
+  - machines/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - controlplane.cluster.x-k8s.io
+  resources:
+  - k0scontrolplanes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - controlplane.cluster.x-k8s.io
+  resources:
+  - k0scontrolplanes/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - controlplane.cluster.x-k8s.io
+  resources:
+  - k0smotroncontrolplanes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - controlplane.cluster.x-k8s.io
+  resources:
+  - k0smotroncontrolplanes/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - persistentvolumeclaims
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - persistentvolumes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - exp.cluster.x-k8s.io
+  resources:
+  - machinepools
+  - machinepools/status
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - '*'
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - pooledremotemachines
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - pooledremotemachines/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - remoteclusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - remoteclusters/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - remotemachines
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - infrastructure.cluster.x-k8s.io
+  resources:
+  - remotemachines/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - k0smotron.io
+  resources:
+  - clusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - k0smotron.io
+  resources:
+  - clusters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - k0smotron.io
+  resources:
+  - clusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - k0smotron.io
+  resources:
+  - jointokenrequests
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - k0smotron.io
+  resources:
+  - jointokenrequests/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - k0smotron.io
+  resources:
+  - jointokenrequests/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kube-rbac-proxy
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: metrics-reader
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-metrics-reader-bootstrap
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: kube-rbac-proxy
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: proxy-role
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-proxy-role-bootstrap
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: leader-election-rolebinding
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: rolebinding
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-leader-election-rolebinding-bootstrap
+  namespace: k0smotron
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: k0smotron-leader-election-role-bootstrap
+subjects:
+- kind: ServiceAccount
+  name: k0smotron-controller-manager-bootstrap
+  namespace: k0smotron
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: manager-rolebinding
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: clusterrolebinding
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-manager-rolebinding-bootstrap
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: k0smotron-manager-role-bootstrap
+subjects:
+- kind: ServiceAccount
+  name: k0smotron-controller-manager-bootstrap
+  namespace: k0smotron
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: kube-rbac-proxy
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: proxy-rolebinding
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: clusterrolebinding
+    app.kubernetes.io/part-of: k0smotron
+  name: k0smotron-proxy-rolebinding-bootstrap
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: k0smotron-proxy-role-bootstrap
+subjects:
+- kind: ServiceAccount
+  name: k0smotron-controller-manager-bootstrap
+  namespace: k0smotron
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: kube-rbac-proxy
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: controller-manager-metrics-service
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: service
+    app.kubernetes.io/part-of: k0smotron
+    control-plane: controller-manager
+  name: k0smotron-controller-manager-metrics-service-bootstrap
+  namespace: k0smotron
+spec:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: https
+  selector:
+    control-plane: controller-manager
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: manager
+    app.kubernetes.io/created-by: k0smotron
+    app.kubernetes.io/instance: controller-manager
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: deployment
+    app.kubernetes.io/part-of: k0smotron
+    control-plane: controller-manager
+  name: k0smotron-controller-manager-bootstrap
+  namespace: k0smotron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
+      labels:
+        control-plane: controller-manager
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+                - ppc64le
+                - s390x
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+      containers:
+      - args:
+        - --secure-listen-address=0.0.0.0:8443
+        - --upstream=http://127.0.0.1:8080/
+        - --logtostderr=true
+        - --v=0
+        image: gcr.io/kubebuilder/kube-rbac-proxy:v0.13.1
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 5m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      - args:
+        - --enable-controller=bootstrap
+        - --health-probe-bind-address=:8081
+        - --metrics-bind-address=127.0.0.1:8080
+        - --leader-elect
+        command:
+        - /manager
+        env:
+        - name: SSH_KNOWN_HOSTS
+          value: ""
+        image: quay.io/k0sproject/k0smotron:v0.9.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: manager
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 500m
+            memory: 128Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+      serviceAccountName: k0smotron-controller-manager-bootstrap
+      terminationGracePeriodSeconds: 10
