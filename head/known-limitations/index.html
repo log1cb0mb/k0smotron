@@ -12,13 +12,13 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
-        <link rel="canonical" href="https://docs.k0smotron.io/head/status/">
+        <link rel="canonical" href="https://docs.k0smotron.io/head/known-limitations/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../contributing/contribute-testing/">
       
       
-        <link rel="next" href="../install/">
+        <link rel="next" href="../resource-reference/">
       
       
       <link rel="icon" href="../img/k0s_social.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Project status - Documentation</title>
+        <title>Known Limitations - Documentation</title>
       
     
     
@@ -87,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-status" class="md-skip">
+        <a href="#known-limitations" class="md-skip">
           Skip to content
         </a>
       
@@ -138,7 +138,7 @@ You are not currently viewing the documentation for the current stable release o
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Project status
+              Known Limitations
             
           </span>
         </div>
@@ -299,30 +299,10 @@ You are not currently viewing the documentation for the current stable release o
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Project status
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -331,35 +311,6 @@ You are not currently viewing the documentation for the current stable release o
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#cluster-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cluster API
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1312,10 +1263,30 @@ You are not currently viewing the documentation for the current stable release o
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../known-limitations/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Known Limitations
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1324,6 +1295,44 @@ You are not currently viewing the documentation for the current stable release o
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#controlplane-vm-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Controlplane VM updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure-controlplane-lbs-need-extra-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure Controlplane LBs need extra ports
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1439,9 +1448,18 @@ You are not currently viewing the documentation for the current stable release o
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cluster-api" class="md-nav__link">
+  <a href="#controlplane-vm-updates" class="md-nav__link">
     <span class="md-ellipsis">
-      Cluster API
+      Controlplane VM updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infrastructure-controlplane-lbs-need-extra-ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infrastructure Controlplane LBs need extra ports
     </span>
   </a>
   
@@ -1462,21 +1480,18 @@ You are not currently viewing the documentation for the current stable release o
                   
 
 
-<h1 id="project-status">Project status<a class="headerlink" href="#project-status" title="Permanent link">#</a></h1>
-<p>To gauge the level of interest in running k0s control planes as Kubernetes
-resources, we are releasing k0smotron at the earliest possible moment. Of
-course, as with any young project just getting started, there are bound to be
-some bumps, unforeseen issues, and a few surprises. In line with that, we can
-offer no guarantees regarding backward or forward compatibility, and you should
-expect a certain amount of breakage with each ensuing k0smotron release.</p>
-<p>All caveats aside, though, we are truly excited about what k0smotron has to
-offer, and look forward to seeing how it can transform the way you manage your
-Kubernetes deployments. We are confident that the open source community will
-take great interest in the project, too, and help us to smooth out the rough
-edges in the days, weeks, and months ahead.</p>
-<h2 id="cluster-api">Cluster API<a class="headerlink" href="#cluster-api" title="Permanent link">#</a></h2>
-<p>One key focus of the k0smotron project is to have it function as a Cluster
-API provider for <code>ControlPlane</code>, <code>Bootstrap</code> and <code>Infrastructure</code> providers.</p>
+<h1 id="known-limitations">Known Limitations<a class="headerlink" href="#known-limitations" title="Permanent link">#</a></h1>
+<p>This pages lists the known limitations we have in k0smotron.</p>
+<h2 id="controlplane-vm-updates">Controlplane VM updates<a class="headerlink" href="#controlplane-vm-updates" title="Permanent link">#</a></h2>
+<p>When running CAPI managed controlplane in VMs, k0smotron currently supports only <code>InPlace</code> upgrade strategy. This means that k0smotron will actually trigger k0s <a href="https://docs.k0sproject.io/stable/autopilot/">autopilot</a> to update the control plane nodes.</p>
+<p>The reason behind is that the "traditional" CAPI way of re-creating the machines involves etcd cluster tweaking, namely removing and adding peers. This is unfortunately not possible with k0s from external toolin, k0smotron in this case, as k0s configures etcd so that it cannot be accessed externally from the nodes.</p>
+<p>We are working on an approach to allow also <code>ReCreate</code> strategy, to comply with traditional CAPI way and to match with other providers.</p>
+<h2 id="infrastructure-controlplane-lbs-need-extra-ports">Infrastructure Controlplane LBs need extra ports<a class="headerlink" href="#infrastructure-controlplane-lbs-need-extra-ports" title="Permanent link">#</a></h2>
+<p>k0s uses 3 ports on controllers: 6443 for Kubernetes API, 8132 for konnectivity and 9443 for k0s internal join API. With CAPI all these three ports needs to be enabled on the control plane LBs. Most of the infrastructure providers support adding extra ports.
+For example with AWS provider you'd need to specify these ports in <a href="https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.AdditionalListenerSpec"><code>AWSCluster.spec.controlPlaneLoadBalancer.additionalListeners</code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">If you encounter an infrastructure provider which does not support adding additional ports, please let us know. We're happy to work with that upstream project to get that functionality added.</p>
+</div>
 
 
 

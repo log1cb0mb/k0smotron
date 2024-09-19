@@ -12,13 +12,13 @@
         <meta name="author" content="Mirantis, Inc.">
       
       
-        <link rel="canonical" href="https://docs.k0smotron.io/head/status/">
+        <link rel="canonical" href="https://docs.k0smotron.io/head/etcd/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../configuration/">
       
       
-        <link rel="next" href="../install/">
+        <link rel="next" href="../ha/">
       
       
       <link rel="icon" href="../img/k0s_social.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Project status - Documentation</title>
+        <title>Etcd configuration - Documentation</title>
       
     
     
@@ -87,7 +87,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project-status" class="md-skip">
+        <a href="#etcd-configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -138,7 +138,7 @@ You are not currently viewing the documentation for the current stable release o
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Project status
+              Etcd configuration
             
           </span>
         </div>
@@ -299,30 +299,10 @@ You are not currently viewing the documentation for the current stable release o
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Project status
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../status/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -331,35 +311,6 @@ You are not currently viewing the documentation for the current stable release o
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#cluster-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cluster API
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -388,17 +339,19 @@ You are not currently viewing the documentation for the current stable release o
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -412,7 +365,7 @@ You are not currently viewing the documentation for the current stable release o
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Usage
@@ -444,17 +397,19 @@ You are not currently viewing the documentation for the current stable release o
                 
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -468,7 +423,7 @@ You are not currently viewing the documentation for the current stable release o
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             Standalone
@@ -542,10 +497,30 @@ You are not currently viewing the documentation for the current stable release o
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../etcd/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Etcd configuration
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -554,6 +529,53 @@ You are not currently viewing the documentation for the current stable release o
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#default-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-etcd-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customizing etcd configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defragmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defragmentation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1439,9 +1461,27 @@ You are not currently viewing the documentation for the current stable release o
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cluster-api" class="md-nav__link">
+  <a href="#default-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Cluster API
+      Default configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customizing-etcd-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customizing etcd configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defragmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defragmentation
     </span>
   </a>
   
@@ -1462,21 +1502,98 @@ You are not currently viewing the documentation for the current stable release o
                   
 
 
-<h1 id="project-status">Project status<a class="headerlink" href="#project-status" title="Permanent link">#</a></h1>
-<p>To gauge the level of interest in running k0s control planes as Kubernetes
-resources, we are releasing k0smotron at the earliest possible moment. Of
-course, as with any young project just getting started, there are bound to be
-some bumps, unforeseen issues, and a few surprises. In line with that, we can
-offer no guarantees regarding backward or forward compatibility, and you should
-expect a certain amount of breakage with each ensuing k0smotron release.</p>
-<p>All caveats aside, though, we are truly excited about what k0smotron has to
-offer, and look forward to seeing how it can transform the way you manage your
-Kubernetes deployments. We are confident that the open source community will
-take great interest in the project, too, and help us to smooth out the rough
-edges in the days, weeks, and months ahead.</p>
-<h2 id="cluster-api">Cluster API<a class="headerlink" href="#cluster-api" title="Permanent link">#</a></h2>
-<p>One key focus of the k0smotron project is to have it function as a Cluster
-API provider for <code>ControlPlane</code>, <code>Bootstrap</code> and <code>Infrastructure</code> providers.</p>
+<h1 id="etcd-configuration">Etcd configuration<a class="headerlink" href="#etcd-configuration" title="Permanent link">#</a></h1>
+<p>k0smotron in HCP mode deploys an etcd cluster to store the state of the control plane. 
+The etcd cluster is deployed as a StatefulSet with odd number of replicas to ensure quorum.
+For example:</p>
+<table>
+<thead>
+<tr>
+<th>Control Plane replicas</th>
+<th>etcd replicas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<h2 id="default-configuration">Default configuration<a class="headerlink" href="#default-configuration" title="Permanent link">#</a></h2>
+<p>The etcd cluster is deployed with the following default configuration options:</p>
+<table>
+<thead>
+<tr>
+<th>etcd flag</th>
+<th>default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>--auto-compaction-mode=periodic</td>
+<td>periodic</td>
+</tr>
+<tr>
+<td>--auto-compaction-retention</td>
+<td>5m</td>
+</tr>
+<tr>
+<td>--snapshot-count</td>
+<td>10000</td>
+</tr>
+</tbody>
+</table>
+<h2 id="customizing-etcd-configuration">Customizing etcd configuration<a class="headerlink" href="#customizing-etcd-configuration" title="Permanent link">#</a></h2>
+<p>k0smotron supports passing (and overriding default) etcd configuration flags to the etcd cluster by setting the <code>spec.etcd.args</code> field in the <code>Cluster</code> resource. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron-test</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">etcd</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--auto-compaction-mode=periodic</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--auto-compaction-retention=15m</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--snapshot-count=20000</span>
+</code></pre></div>
+<h2 id="defragmentation">Defragmentation<a class="headerlink" href="#defragmentation" title="Permanent link">#</a></h2>
+<p>k0smotron supports running etcd defragmentation job periodically. The defragmentation job is disabled by default. 
+To enable the defragmentation job, set the <code>spec.etcd.defragJob.enabled</code> field to <code>true</code> in the <code>Cluster</code> resource.
+If enabled, by default the defragmentation job runs every day at 12:00. You can customize the schedule and the rule for the defragmentation job by setting the <code>spec.etcd.defragJob.schedule</code> and <code>spec.etcd.defragJob.rule</code> fields in the <code>Cluster</code> resource. For example:</p>
+<p>The feature is based on the <strong>etcd-defrag</strong> tool. For more information, see the <a href="https://github.com/ahrtr/etcd-defrag">etcd-defrag repo</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cluster</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0smotron-test</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">etcd</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">defragJob</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span><span class="w"> </span><span class="c1"># Default: 0 12 * * *</span>
+<span class="w">      </span><span class="nt">rule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dbQuotaUsage</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">0.5</span><span class="nv"> </span><span class="s">||</span><span class="nv"> </span><span class="s">dbSize</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">dbSizeInUse</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">200*1024*1024&quot;</span><span class="w"> </span><span class="c1"># Default: dbQuotaUsage &gt; 0.8 || dbSize - dbSizeInUse &gt; 200*1024*1024</span>
+</code></pre></div>
 
 
 
